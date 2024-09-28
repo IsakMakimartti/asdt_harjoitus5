@@ -219,6 +219,7 @@ buttonSendMonkeyKernesti = tk.Button (
     anchor="se"
 )
 
+
 # Sijoitetaan UI-Komponentit
 labelImageSaari.place(x=70, y=240, anchor="center")
 labelImageManner.place(x=mannerX, y=240, anchor="center")

@@ -125,6 +125,7 @@ def moveMonkeyErnesti():
         # ja eatenrandomizer tarkistaa joka kilometrin välillä 1 % mahdollisuuden tulla syödyksi
         if sharkRandomizer == 1 and eatenRandomizer > 0.99:
             print("Monkey got eaten by a shark!")
+            labelImageApinaErnesti.configure(fg='red')
             labelImageApinaErnesti.destroy
             break
             
@@ -156,6 +157,10 @@ def moveMonkeyKernesti():
     yAxel = 345
     counter = 0
 
+
+    # Randomisoidaan 50% chance sille että apina tulee syödyksi
+    sharkRandomizer = np.random.randint(0, 2)
+
     data['monkeyCountKernesti'] += 1
     apina_id_kernesti = data['monkeyCountKernesti']
 
@@ -165,11 +170,20 @@ def moveMonkeyKernesti():
     labelImageApinaKernesti = tk.Label(window, image=imageApina)
 
     while xAxel < mannerX:
+        eatenRandomizer = np.random.random()
         labelImageApinaKernesti.place(x=xAxel, y=yAxel, anchor="n")
         xAxel +=movementRate
         counter +=1
         window.update()
 
+        # Toteutus sille että noin 50% mahdollisuus että apina jää hain suuhun toinen tarkistaa sen alkuasetetun arvon 
+        # ja eatenrandomizer tarkistaa joka kilometrin välillä 1 % mahdollisuuden tulla syödyksi
+        if sharkRandomizer == 1 and eatenRandomizer > 0.99:
+            print("Kernestis monkey got eaten by a shark!")
+            labelImageApinaKernesti.configure(fg='red')
+            labelImageApinaKernesti.destroy
+            break
+           
         if apina_number == 'k4' and xAxel == mannerX:
             labelMessage = tk.Label(window, text=data[0])
             labelMessage.place(x=mannerX, y=yAxel, anchor="n")
