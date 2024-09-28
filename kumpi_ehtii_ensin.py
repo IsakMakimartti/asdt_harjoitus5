@@ -14,6 +14,8 @@ data = {}
 data['monkeyCountErnesti'] = 0
 data['monkeyCountKernesti'] = 0
 data['monkey'] = {}
+data['messageCountErnesti'] = 0
+data['messageCountKernesti'] = 0
 
 # Jaetaan kokonainen string osiin, tässä otettu mallia seuraavasta lähteestä: https://www.geeksforgeeks.org/python-program-to-split-the-string-and-convert-it-to-dictionary/
 fullString = "Ernesti ja Kernesti tässä terve! Olemme autiolla saarella, voisiko joku tulla sieltä sivistyneestä maailmasta hakemaan meidät pois! Kiitos!"
@@ -63,8 +65,10 @@ def messageSender(messageNumber, yAxel, whoIsMessaging):
             messageSender(messageNumber, yAxel, True)
         else:
             print("Ernestin viestit:", data[messageNumber])
+            data['messageCountErnesti'] += 1
             labelMessage = tk.Label(window, text=data[messageNumber])
             labelMessage.place(x=mannerX, y=yAxel, anchor="n")
+            print(data['messageCountErnesti'])
             time.sleep(0.1)
             labelMessage.destroy()
     else: 
@@ -74,8 +78,10 @@ def messageSender(messageNumber, yAxel, whoIsMessaging):
             messageSender(messageNumber, yAxel, False)
         else:
             print("Kernestin viestit:", data[messageNumber])
+            data['messageCountKernesti'] += 1
             labelMessage = tk.Label(window, text=data[messageNumber])
             labelMessage.place(x=mannerX, y=yAxel, anchor="n")
+            print(data['messageCountKernesti'])
             time.sleep(0.1)
             labelMessage.destroy()
 
@@ -124,7 +130,8 @@ def moveMonkeyErnesti():
         # Toteutus sille että noin 50% mahdollisuus että apina jää hain suuhun toinen tarkistaa sen alkuasetetun arvon 
         # ja eatenrandomizer tarkistaa joka kilometrin välillä 1 % mahdollisuuden tulla syödyksi
         if sharkRandomizer == 1 and eatenRandomizer > 0.99:
-            print("Monkey got eaten by a shark!")
+            print("Ernestis monkey got eaten by a shark!")
+            labelImageApinaErnesti.configure(fg='red')
             labelImageApinaErnesti.destroy
             break
             
@@ -156,6 +163,9 @@ def moveMonkeyKernesti():
     yAxel = 345
     counter = 0
 
+    # Randomisoidaan 50% chance sille että apina tulee syödyksi
+    sharkRandomizer = np.random.randint(0, 2)
+
     data['monkeyCountKernesti'] += 1
     apina_id_kernesti = data['monkeyCountKernesti']
 
@@ -165,10 +175,19 @@ def moveMonkeyKernesti():
     labelImageApinaKernesti = tk.Label(window, image=imageApina)
 
     while xAxel < mannerX:
+        eatenRandomizer = np.random.random()
         labelImageApinaKernesti.place(x=xAxel, y=yAxel, anchor="n")
         xAxel +=movementRate
         counter +=1
         window.update()
+
+        # Toteutus sille että noin 50% mahdollisuus että apina jää hain suuhun toinen tarkistaa sen alkuasetetun arvon 
+        # ja eatenrandomizer tarkistaa joka kilometrin välillä 1 % mahdollisuuden tulla syödyksi
+        if sharkRandomizer == 1 and eatenRandomizer > 0.99:
+            print("Kernestis monkey got eaten by a shark!")
+            labelImageApinaKernesti.configure(fg='red')
+            labelImageApinaKernesti.destroy
+            break
 
         if apina_number == 'k4' and xAxel == mannerX:
             labelMessage = tk.Label(window, text=data[0])
@@ -219,8 +238,7 @@ buttonSendMonkeyKernesti = tk.Button (
     anchor="se"
 )
 
-
-# Sijoitetaan UI-Komponentit
+# Sijoitetaan UI-Komponentit, paitsi apina
 labelImageSaari.place(x=70, y=240, anchor="center")
 labelImageManner.place(x=mannerX, y=240, anchor="center")
 buttonSendMonkeyErnesti.place(relx=0.01, rely=0.9)
