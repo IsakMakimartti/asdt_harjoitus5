@@ -99,6 +99,9 @@ def moveMonkeyErnesti():
     yAxel = 100
     counter = 0
 
+    # Randomisoidaan 50% chance sille että apina tulee syödyksi
+    sharkRandomizer = np.random.randint(0, 2)
+
     # Lasketaan apinat
     data['monkeyCountErnesti'] += 1
     apina_id_ernesti = data['monkeyCountErnesti']
@@ -111,10 +114,20 @@ def moveMonkeyErnesti():
 
     # Vertaillaan ollaanko saavuttu mantereelle
     while xAxel < mannerX:
+        eatenRandomizer = np.random.random()
+
         labelImageApinaErnesti.place(x=xAxel, y=yAxel, anchor="n")
         xAxel +=movementRate
         counter +=1
         window.update()
+
+        # Toteutus sille että noin 50% mahdollisuus että apina jää hain suuhun toinen tarkistaa sen alkuasetetun arvon 
+        # ja eatenrandomizer tarkistaa joka kilometrin välillä 1 % mahdollisuuden tulla syödyksi
+        if sharkRandomizer == 1 and eatenRandomizer > 0.99:
+            print("Monkey got eaten by a shark!")
+            labelImageApinaErnesti.destroy
+            break
+            
         # 2Pistettä osa 1 "toiminto, joka määrittelee apinan, jolle on opetettu yksi sana Ernestin ja Kernestin luomasta hätäviestistä"
         if apina_number == 'e4' and xAxel == mannerX:
             labelMessage = tk.Label(window, text=data[0])
@@ -123,6 +136,8 @@ def moveMonkeyErnesti():
             time.sleep(0.1)
             labelMessage.destroy()
         #print("Ernestin apinan matka: ",counter,"KM")
+        # 2Pistettä osa 2 toiminto "-luo toiminto säikeistystä (threading) käyttäen, jolla Ernesti voi lähettää yksittäisen apinan mukanaan yksi sana kohti manteretta.
+        #  Ilmaise sopivalla äänimerkillä uimaääniä jokaisen "kilometrin" kohdalla. Ja, mikäli apina pääsee perille, ilmaise tämä sopivalla äänimerkillä."
         if xAxel == mannerX:
             startMessageThread(True)
             messageCounterErnesti += 1
