@@ -30,7 +30,8 @@ apina_id_kernesti = data['monkeyCountKernesti']
 isSwimming = False
 isSwimmingErnesti = False
 isSwimmingKernesti = False
-messageCounter = 0
+messageCounterErnesti = 0
+messageCounterKernesti = 0
 
 # Tuodaan kuvat
 imageSaari = PhotoImage(file="saari.png")
@@ -52,24 +53,40 @@ def moveMonkey(whoIsSending):
         #print("Kernesti lähetti apinan matkaan")
         startThread(False)
 
-def messageSender(messageNumber, yAxel):
-    global messageCounter
-    if messageNumber > 17:
-        messageCounter = 0
-        messageNumber = 0
-        messageSender(messageNumber, 100)
-    else:
-        print(data[messageNumber])
-        labelMessage = tk.Label(window, text=data[messageNumber])
-        labelMessage.place(x=mannerX, y=yAxel, anchor="n")
+# Apinoiden viestit
+def messageSender(messageNumber, yAxel, whoIsMessaging):
+    global messageCounterErnesti, messageCounterKernesti
+    if whoIsMessaging == True:
+        if messageNumber > 17:
+            messageCounterErnesti = 0
+            messageNumber = 0
+            messageSender(messageNumber, yAxel, True)
+        else:
+            print("Ernestin viestit:", data[messageNumber])
+            labelMessage = tk.Label(window, text=data[messageNumber])
+            labelMessage.place(x=mannerX, y=yAxel, anchor="n")
+    else: 
+        if messageNumber > 17:
+            messageCounterKernesti = 0
+            messageNumber = 0
+            messageSender(messageNumber, yAxel, False)
+        else:
+            print("Kernestin viestit:", data[messageNumber])
+            labelMessage = tk.Label(window, text=data[messageNumber])
+            labelMessage.place(x=mannerX, y=yAxel, anchor="n")
 
-def startMessageErnestiThread():
-    kahva_sendMessageErnesti = td.Thread(target=messageSender(messageCounter, 100))
-    kahva_sendMessageErnesti.start()
+# Säikeistys Ernestin viesteille
+def startMessageThread(whoIsMessaging):
+    if whoIsMessaging == True:
+        kahva_sendMessageErnesti = td.Thread(target=messageSender(messageCounterErnesti, 100, True))
+        kahva_sendMessageErnesti.start()
+    else: 
+        kahva_sendMessageKernesti = td.Thread(target=messageSender(messageCounterKernesti, 345, False))
+        kahva_sendMessageKernesti.start()
 
 # Apinoiden liike toiminnallisuus
 def moveMonkeyErnesti():
-    global mannerX, isSwimmingErnesti, data, apina_id_ernesti, messageCounter
+    global mannerX, isSwimmingErnesti, data, apina_id_ernesti, messageCounterErnesti
     isSwimmingErnesti = True
     #print("Ollaan moveMonkeyErnesti funktiossa")
 
@@ -99,17 +116,16 @@ def moveMonkeyErnesti():
             labelMessage = tk.Label(window, text=data[0])
             labelMessage.place(x=mannerX, y=yAxel, anchor="n")
             print("Ernestis message:", data[0])
+        #print("Ernestin apinan matka: ",counter,"KM")
         if xAxel == mannerX:
-            startMessageErnestiThread()
-            print(messageCounter)
-            messageCounter += 1
-        
+            startMessageThread(True)
+            print(messageCounterErnesti)
+            messageCounterErnesti += 1
         time.sleep(0.05)
-    
     killThread(True)
 
 def moveMonkeyKernesti():
-    global mannerX, isSwimmingKernesti, data, apina_id_kernesti
+    global mannerX, isSwimmingKernesti, data, apina_id_kernesti, messageCounterKernesti
     isSwimmingKernesti = True
     #print("Ollaan moveMonkeyKernesti funktiossa")
 
@@ -137,6 +153,10 @@ def moveMonkeyKernesti():
             labelMessage.place(x=mannerX, y=yAxel, anchor="n")
             print("Kernestis message:", data[0])
         #print("Kernestin apinan matka: ",counter,"KM")
+        if xAxel == mannerX:
+            startMessageThread(False)
+            print(messageCounterKernesti)
+            messageCounterKernesti += 1
         time.sleep(0.05)
     killThread(False)
 
