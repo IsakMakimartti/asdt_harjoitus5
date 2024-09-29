@@ -62,10 +62,10 @@ def moveMonkey(whoIsSending):
         counterKernesti = 1
         #print("Kernesti lähetti apinan matkaan")
         while counterKernesti<10:
-            startThread(True)
+            startThread(False)
             time.sleep(0.2)
             counterKernesti += 1
-            
+
 # Apinoiden viestit
 def messageSender(messageNumber, yAxel, whoIsMessaging):
     global messageCounterErnesti, messageCounterKernesti
