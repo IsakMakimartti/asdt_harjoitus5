@@ -54,6 +54,7 @@ labelImageCoastGuardSouth = tk.Label(window, image=imageCoastGuardSouth)
 labelImageShipErnesti = tk.Label(window, image=imageShip)
 labelImageShipKernesti = tk.Label(window, image=imageShip)
 
+# Säikeistetään äänieffektit
 def playSound(frequency, duration):
     td.Thread(target=winsound.Beep, args=(frequency, duration)).start()
 

@@ -44,6 +44,7 @@ labelImageSaari = tk.Label(window, image=imageSaari)
 labelImageManner = tk.Label(window, image=imageManner)
 labelImageApina = tk.Label(window, image=imageApina)
 
+# Säikeistetään äänieffektit
 def playSound(frequency, duration):
     td.Thread(target=winsound.Beep, args=(frequency, duration)).start()
 
