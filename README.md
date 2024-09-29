@@ -7,3 +7,5 @@
 ## Piste 3 module: apinoiden_opettaminen.py, apinaryhman_uintimatka_osa2.py ( testi 10 apinaa)
 
 ## Piste 4 module: kumpi_ehtii_ensin.py
+
+## Videolinkki: https://youtu.be/alGAinBYZ64
