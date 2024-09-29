@@ -27,6 +27,7 @@ for message, ele in enumerate(tempString):
 
 # Muuttujat
 mannerX = 570
+saariX = 70
 apina_id_ernesti = data['monkeyCountErnesti']
 apina_id_kernesti = data['monkeyCountKernesti']
 isSwimming = False
@@ -39,11 +40,18 @@ messageCounterKernesti = 0
 imageSaari = PhotoImage(file="saari.png")
 imageManner = PhotoImage(file="manner.png")
 imageApina = PhotoImage(file="apina.png")
+imageCoastGuardNorth = PhotoImage(file="pohteri.png")
+imageCoastGuardSouth = PhotoImage(file="eteteri.png")
+imageShip = PhotoImage(file="ship.png")
 
-# Tehdään Labelit
+# Tehdään Labelit kuvista
 labelImageSaari = tk.Label(window, image=imageSaari)
 labelImageManner = tk.Label(window, image=imageManner)
 labelImageApina = tk.Label(window, image=imageApina)
+labelImageCoastGuardNorth = tk.Label(window, image=imageCoastGuardNorth)
+labelImageCoastGuardSouth = tk.Label(window, image=imageCoastGuardSouth)
+labelImageShipErnesti = tk.Label(window, image=imageShip)
+labelImageShipKernesti = tk.Label(window, image=imageShip)
 
 # Apinoiden liikkeellepano
 def moveMonkey(whoIsSending):
@@ -68,7 +76,7 @@ def messageSender(messageNumber, yAxel, whoIsMessaging):
             data['messageCountErnesti'] += 1
             labelMessage = tk.Label(window, text=data[messageNumber])
             labelMessage.place(x=mannerX, y=yAxel, anchor="n")
-            print(data['messageCountErnesti'])
+            print("ErnestiMessageCount", data['messageCountErnesti'])
             time.sleep(0.1)
             labelMessage.destroy()
     else: 
@@ -81,7 +89,7 @@ def messageSender(messageNumber, yAxel, whoIsMessaging):
             data['messageCountKernesti'] += 1
             labelMessage = tk.Label(window, text=data[messageNumber])
             labelMessage.place(x=mannerX, y=yAxel, anchor="n")
-            print(data['messageCountKernesti'])
+            print("KernestiMessageCount", data['messageCountKernesti'])
             time.sleep(0.1)
             labelMessage.destroy()
 
@@ -223,7 +231,49 @@ def killThread(whoisSending):
     else:
         isSwimmingKernesti = False
 
-# Tehdään napit Ernestille ja Kernestille
+def coastGuardNorth():
+    global data
+    shipX = 570
+    messageCounter = 0
+    for i in range(100):
+        if messageCounter >= 10:
+            while shipX > saariX:
+                labelImageShipErnesti.place(x=shipX, y=70, anchor="n")
+                shipX -= 1
+                time.sleep(0.05)
+                if shipX == saariX:
+                    print("Ernesti: JES! Laiva saapui! Sain viestin perille!")
+                    break
+        else:
+            messageCounter = data['messageCountErnesti']
+            print("Pohjois rajavartiostoon saapuneet viestit:", messageCounter)
+            time.sleep(1)
+
+def coastGuardSouth():
+    global data
+    shipX = 570
+    messageCounter = 0
+    for i in range(100):
+        if messageCounter >= 10:
+            while shipX > saariX:
+                labelImageShipKernesti.place(x=shipX, y=345, anchor="n")
+                shipX -= 1
+                time.sleep(0.05)
+                if shipX == saariX:
+                    print("Kernesti: JES! Laiva saapui! Sain viestin perille!")
+                    break
+        else:
+            messageCounter = data['messageCountKernesti']
+            print("Etelä rajavartiostoon saapuneet viestit:", messageCounter)
+            time.sleep(1)
+
+def startCoastGuardThreads():
+    kahva_coastGuardNorth = td.Thread(target=coastGuardNorth)
+    kahva_costGuardSouth = td.Thread(target=coastGuardSouth)
+    kahva_coastGuardNorth.start()
+    kahva_costGuardSouth.start()
+
+# Tehdään napit Ernestille ja Kernestille, sekä rannikkovartiostolle
 buttonSendMonkeyErnesti = tk.Button (
     window,
     command=lambda: moveMonkey(True),
@@ -238,11 +288,21 @@ buttonSendMonkeyKernesti = tk.Button (
     anchor="se"
 )
 
-# Sijoitetaan UI-Komponentit, paitsi apina
+buttonStartCoastGuards = tk.Button (
+    window,
+    command = startCoastGuardThreads,
+    text="Coastguards",
+    anchor="sw"
+)
+
+# Sijoitetaan UI-Komponentit, paitsi apina, relx, rely tarkoittaa suhteessa 0-1 todelliseen pixelimäärään
 labelImageSaari.place(x=70, y=240, anchor="center")
 labelImageManner.place(x=mannerX, y=240, anchor="center")
+labelImageCoastGuardNorth.place(x=mannerX, y=20, anchor="n")
+labelImageCoastGuardSouth.place(x=mannerX, y=460, anchor="s")
 buttonSendMonkeyErnesti.place(relx=0.01, rely=0.9)
 buttonSendMonkeyKernesti.place(relx=0.12, rely=0.9)
+buttonStartCoastGuards.place(relx = 0.03, rely = 0.1)
 
 # Avataan ikkuna
 window.mainloop()
