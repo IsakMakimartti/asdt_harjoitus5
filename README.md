@@ -4,8 +4,10 @@
 
 ## Piste 2 module: apinoiden_opettaminen.py
 
-## Piste 3 module: apinoiden_opettaminen.py, apinaryhman_uintimatka_osa2.py ( testi 10 apinaa)
+## Piste 3 module: apinoiden_opettaminen.py, apinaryhman_uintimatka_osa2.py (testi 10 apinaa)
 
 ## Piste 4 module: kumpi_ehtii_ensin.py
 
 ## Videolinkki: https://youtu.be/alGAinBYZ64
+
+## Github link: https://github.com/IsakMakimartti/asdt_harjoitus5
