@@ -53,6 +53,8 @@ labelImageCoastGuardNorth = tk.Label(window, image=imageCoastGuardNorth)
 labelImageCoastGuardSouth = tk.Label(window, image=imageCoastGuardSouth)
 labelImageShipErnesti = tk.Label(window, image=imageShip)
 labelImageShipKernesti = tk.Label(window, image=imageShip)
+labelPohteri = tk.Label(window, text="Pohteri")
+labelEteteri = tk.Label(window, text="Eteteri")
 
 # Säikeistetään äänieffektit
 def playSound(frequency, duration):
@@ -174,7 +176,6 @@ def moveMonkeyKernesti():
     global mannerX, isSwimmingKernesti, data, apina_id_kernesti, messageCounterKernesti
     isSwimmingKernesti = True
     #print("Ollaan moveMonkeyKernesti funktiossa")
-
     movementRate = 5
     xAxel = 70
     yAxel = 345
@@ -318,6 +319,8 @@ labelImageCoastGuardSouth.place(x=mannerX, y=460, anchor="s")
 buttonSendMonkeyErnesti.place(relx=0.01, rely=0.9)
 buttonSendMonkeyKernesti.place(relx=0.12, rely=0.9)
 buttonStartCoastGuards.place(relx = 0.03, rely = 0.1)
+labelPohteri.place(x=mannerX, y=20, anchor="n")
+labelEteteri.place(x=mannerX, y=460, anchor="s")
 
 # Avataan ikkuna
 window.mainloop()

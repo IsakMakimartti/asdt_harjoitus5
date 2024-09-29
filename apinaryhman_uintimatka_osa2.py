@@ -53,15 +53,19 @@ def moveMonkey(whoIsSending):
 
     if whoIsSending == True:
         #print("Ernesti lähetti apinan matkaan")
-        for i in range(10):
+        counterErnesti = 1
+        while counterErnesti<10:
             startThread(True)
-            time.sleep(0.1)
+            time.sleep(0.2)
+            counterErnesti += 1
     else:
+        counterKernesti = 1
         #print("Kernesti lähetti apinan matkaan")
-        for i in range(10):
-            startThread(False)
-            time.sleep(0.1)
-
+        while counterKernesti<10:
+            startThread(True)
+            time.sleep(0.2)
+            counterKernesti += 1
+            
 # Apinoiden viestit
 def messageSender(messageNumber, yAxel, whoIsMessaging):
     global messageCounterErnesti, messageCounterKernesti
@@ -219,6 +223,34 @@ def moveMonkeyKernesti():
 
 # Aloitetaan ja tapetaan säikeet riippuen kuka lähettää apinan
 # Käytin koodia täältä avuksi: https://stackoverflow.com/questions/63450516/i-get-this-error-runtimeerror-threads-can-only-be-started-once-when-i-click-c 
+
+def startMultipleThreads(whoIsSending):
+    if whoIsSending == True:
+        kahva_moveMonkeyErnesti = td.Thread(target=moveMonkeyErnesti)
+        kahva_moveMonkeyErnesti.start()
+        kahva_moveMonkeyErnesti.start()
+        kahva_moveMonkeyErnesti.start()
+        kahva_moveMonkeyErnesti.start()
+        kahva_moveMonkeyErnesti.start()
+        kahva_moveMonkeyErnesti.start()
+        kahva_moveMonkeyErnesti.start()
+        kahva_moveMonkeyErnesti.start()
+        kahva_moveMonkeyErnesti.start()
+        kahva_moveMonkeyErnesti.start()
+        kahva_moveMonkeyErnesti.start()
+    elif whoIsSending == False:
+        # not isSwimmingKernesti and 
+        kahva_moveMonkeyKernesti = td.Thread(target=moveMonkeyKernesti)
+        kahva_moveMonkeyKernesti.start()
+        kahva_moveMonkeyKernesti.start()
+        kahva_moveMonkeyKernesti.start()
+        kahva_moveMonkeyKernesti.start()
+        kahva_moveMonkeyKernesti.start()
+        kahva_moveMonkeyKernesti.start()
+        kahva_moveMonkeyKernesti.start()
+        kahva_moveMonkeyKernesti.start()
+        kahva_moveMonkeyKernesti.start()
+        
 def startThread(whoIsSending):
     if whoIsSending == True:
         # not isSwimmingErnesti and 

@@ -47,7 +47,7 @@ labelImageApina = tk.Label(window, image=imageApina)
 # Säikeistetään äänieffektit
 def playSound(frequency, duration):
     td.Thread(target=winsound.Beep, args=(frequency, duration)).start()
-  
+   
 # Apinoiden liikkeellepano
 def moveMonkey(whoIsSending):
 
@@ -165,7 +165,6 @@ def moveMonkeyKernesti():
     xAxel = 70
     yAxel = 345
     counter = 0
-
 
     # Randomisoidaan 50% chance sille että apina tulee syödyksi
     sharkRandomizer = np.random.randint(0, 2)
