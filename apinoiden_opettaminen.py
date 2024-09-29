@@ -3,6 +3,7 @@ import threading as td
 from tkinter import PhotoImage
 import time
 import numpy as np
+import winsound
 
 # Alustus
 window = tk.Tk()
@@ -42,6 +43,9 @@ imageApina = PhotoImage(file="apina.png")
 labelImageSaari = tk.Label(window, image=imageSaari)
 labelImageManner = tk.Label(window, image=imageManner)
 labelImageApina = tk.Label(window, image=imageApina)
+
+def playSound(frequency, duration):
+    td.Thread(target=winsound.Beep, args=(frequency, duration)).start()
 
 # Apinoiden liikkeellepano
 def moveMonkey(whoIsSending):
@@ -111,6 +115,7 @@ def moveMonkeyErnesti():
 
     # Vertaillaan ollaanko saavuttu mantereelle
     while xAxel < mannerX:
+        playSound(400, 100)
         labelImageApinaErnesti.place(x=xAxel, y=yAxel, anchor="n")
         xAxel +=movementRate
         counter +=1
@@ -127,6 +132,7 @@ def moveMonkeyErnesti():
             startMessageThread(True)
             messageCounterErnesti += 1
             time.sleep(0.1)
+            playSound(1000, 100)
             labelImageApinaErnesti.destroy()
         time.sleep(0.05)
     killThread(True)
@@ -150,6 +156,7 @@ def moveMonkeyKernesti():
     labelImageApinaKernesti = tk.Label(window, image=imageApina)
 
     while xAxel < mannerX:
+        playSound(400, 100)
         labelImageApinaKernesti.place(x=xAxel, y=yAxel, anchor="n")
         xAxel +=movementRate
         counter +=1
@@ -166,6 +173,7 @@ def moveMonkeyKernesti():
             startMessageThread(False)
             messageCounterKernesti += 1
             time.sleep(0.1)
+            playSound(1000, 100)
             labelImageApinaKernesti.destroy()
         time.sleep(0.05)
     killThread(False)

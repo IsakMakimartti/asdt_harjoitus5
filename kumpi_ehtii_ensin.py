@@ -3,6 +3,7 @@ import threading as td
 from tkinter import PhotoImage
 import time
 import numpy as np
+import winsound
 
 # Alustus
 window = tk.Tk()
@@ -52,6 +53,9 @@ labelImageCoastGuardNorth = tk.Label(window, image=imageCoastGuardNorth)
 labelImageCoastGuardSouth = tk.Label(window, image=imageCoastGuardSouth)
 labelImageShipErnesti = tk.Label(window, image=imageShip)
 labelImageShipKernesti = tk.Label(window, image=imageShip)
+
+def playSound(frequency, duration):
+    td.Thread(target=winsound.Beep, args=(frequency, duration)).start()
 
 # Apinoiden liikkeellepano
 def moveMonkey(whoIsSending):
@@ -129,7 +133,7 @@ def moveMonkeyErnesti():
     # Vertaillaan ollaanko saavuttu mantereelle
     while xAxel < mannerX:
         eatenRandomizer = np.random.random()
-
+        playSound(400, 100)
         labelImageApinaErnesti.place(x=xAxel, y=yAxel, anchor="n")
         xAxel +=movementRate
         counter +=1
@@ -139,8 +143,11 @@ def moveMonkeyErnesti():
         # ja eatenrandomizer tarkistaa joka kilometrin välillä 1 % mahdollisuuden tulla syödyksi
         if sharkRandomizer == 1 and eatenRandomizer > 0.99:
             print("Ernestis monkey got eaten by a shark!")
-            labelImageApinaErnesti.configure(fg='red')
-            labelImageApinaErnesti.destroy
+            time.sleep(1.0)
+            winsound.Beep(5000, 100)
+            time.sleep(1.0)
+            labelImageApinaErnesti.destroy()
+            time.sleep(0.1)
             break
             
         # 2Pistettä osa 1 "toiminto, joka määrittelee apinan, jolle on opetettu yksi sana Ernestin ja Kernestin luomasta hätäviestistä"
@@ -157,6 +164,7 @@ def moveMonkeyErnesti():
             startMessageThread(True)
             messageCounterErnesti += 1
             time.sleep(0.1)
+            playSound(1000, 100)
             labelImageApinaErnesti.destroy()
         time.sleep(0.05)
     killThread(True)
@@ -184,6 +192,7 @@ def moveMonkeyKernesti():
 
     while xAxel < mannerX:
         eatenRandomizer = np.random.random()
+        playSound(400, 100)
         labelImageApinaKernesti.place(x=xAxel, y=yAxel, anchor="n")
         xAxel +=movementRate
         counter +=1
@@ -193,8 +202,11 @@ def moveMonkeyKernesti():
         # ja eatenrandomizer tarkistaa joka kilometrin välillä 1 % mahdollisuuden tulla syödyksi
         if sharkRandomizer == 1 and eatenRandomizer > 0.99:
             print("Kernestis monkey got eaten by a shark!")
-            labelImageApinaKernesti.configure(fg='red')
-            labelImageApinaKernesti.destroy
+            time.sleep(1.0)
+            winsound.Beep(5000, 100)
+            time.sleep(1.0)
+            labelImageApinaKernesti.destroy()
+            time.sleep(0.1)
             break
 
         if apina_number == 'k4' and xAxel == mannerX:
@@ -207,7 +219,9 @@ def moveMonkeyKernesti():
         if xAxel == mannerX:
             startMessageThread(False)
             messageCounterKernesti += 1
-            time.sleep(0.1)
+            time.sleep(1.0)
+            playSound(1000, 100)
+            time.sleep(1.0)
             labelImageApinaKernesti.destroy()
         time.sleep(0.05)
     killThread(False)
