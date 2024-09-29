@@ -223,34 +223,7 @@ def moveMonkeyKernesti():
 
 # Aloitetaan ja tapetaan säikeet riippuen kuka lähettää apinan
 # Käytin koodia täältä avuksi: https://stackoverflow.com/questions/63450516/i-get-this-error-runtimeerror-threads-can-only-be-started-once-when-i-click-c 
-
-def startMultipleThreads(whoIsSending):
-    if whoIsSending == True:
-        kahva_moveMonkeyErnesti = td.Thread(target=moveMonkeyErnesti)
-        kahva_moveMonkeyErnesti.start()
-        kahva_moveMonkeyErnesti.start()
-        kahva_moveMonkeyErnesti.start()
-        kahva_moveMonkeyErnesti.start()
-        kahva_moveMonkeyErnesti.start()
-        kahva_moveMonkeyErnesti.start()
-        kahva_moveMonkeyErnesti.start()
-        kahva_moveMonkeyErnesti.start()
-        kahva_moveMonkeyErnesti.start()
-        kahva_moveMonkeyErnesti.start()
-        kahva_moveMonkeyErnesti.start()
-    elif whoIsSending == False:
-        # not isSwimmingKernesti and 
-        kahva_moveMonkeyKernesti = td.Thread(target=moveMonkeyKernesti)
-        kahva_moveMonkeyKernesti.start()
-        kahva_moveMonkeyKernesti.start()
-        kahva_moveMonkeyKernesti.start()
-        kahva_moveMonkeyKernesti.start()
-        kahva_moveMonkeyKernesti.start()
-        kahva_moveMonkeyKernesti.start()
-        kahva_moveMonkeyKernesti.start()
-        kahva_moveMonkeyKernesti.start()
-        kahva_moveMonkeyKernesti.start()
-        
+ 
 def startThread(whoIsSending):
     if whoIsSending == True:
         # not isSwimmingErnesti and 
